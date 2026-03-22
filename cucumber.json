@@ -1,0 +1,28 @@
+{
+  "default": {
+    "requireModule": ["ts-node/register"],
+    "require": [
+      "src/support/world.ts",
+      "src/support/hooks.ts",
+      "step-definitions/**/*.ts"
+    ],
+    "format": [
+      "summary",
+      "html:reports/cucumber-report.html"
+    ],
+    "paths": ["features/**/*.feature"]
+  },
+  "api": {
+    "requireModule": ["ts-node/register"],
+    "require": [
+      "src/support/world.ts",
+      "src/support/hooks.ts",
+      "step-definitions/**/*.ts"
+    ],
+    "format": [
+      "summary",
+      "html:reports/cucumber-report.html"
+    ],
+    "paths": ["features/api/**/*.feature"]
+  }
+}
