@@ -1,0 +1,19 @@
+{
+  "name": "qa-automation-benefits-dashboard",
+  "version": "1.0.0",
+  "description": "Paylocity Benefits Dashboard API & UI Automation",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:api": "cucumber-js --profile api",
+    "test:tags": "cucumber-js --tags"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.9.0",
+    "@faker-js/faker": "^8.4.1",
+    "@playwright/test": "^1.44.0",
+    "dotenv": "^16.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.5"
+  }
+}
