@@ -140,6 +140,24 @@ npm run test:tags -- @ui
 
 ---
 
+## Test Cleanup
+
+After every test run an `AfterAll` hook automatically deletes all employees from the system. This ensures the environment is clean before the next run and prevents test data from accumulating.
+
+```
+Test run completes
+       │
+       └── AfterAll hook fires
+               │
+               ├── GET /api/Employees → fetch all records
+               ├── DELETE each employee by id
+               └── Dispose API context
+```
+
+> Cleanup failure is non-blocking — if the cleanup fails the test results are not affected.
+
+---
+
 ## Test Cases
 
 ### API — Happy Path (8 scenarios — all passing)
@@ -177,7 +195,7 @@ npm run test:tags -- @ui
 
 ---
 
-### UI — Happy Path (8 scenarios — all passing)
+### UI — Happy Path (12 scenarios — all passing)
 
 | Feature | Scenario |
 |---|---|
@@ -185,6 +203,7 @@ npm run test:tags -- @ui
 | Benefits Dashboard | Dashboard table displays all required columns |
 | Benefits Dashboard | Add Employee button is visible |
 | Benefits Dashboard | Login fails when no credentials are provided |
+| Benefits Dashboard | Successfully log out and validate login page is shown |
 | Add Employee Modal | Add Employee modal displays all required elements |
 | Add Employee Modal | Successfully create an employee |
 | Add Employee Modal | Net Pay calculated correctly — 0 dependants |

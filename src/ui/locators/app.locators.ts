@@ -29,6 +29,10 @@ class LoginLocators {
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 class DashboardLocators {
   private _dashboardTitle = 'xpath=//a[text()="Paylocity Benefits Dashboard"]';
+  private _logOutLink = 'xpath=//a[@href="/Prod/Account/LogOut"]';
+
+  get logOutLink() { return this._logOutLink; }
+  set logOutLink(value: string) { this._logOutLink = value; }
   private _addEmployeeButton = 'xpath=//button[@id="add"]';
   private _colId = 'xpath=//th[text()="Id"]';
   private _colLastName = 'xpath=//th[text()="Last Name"]';

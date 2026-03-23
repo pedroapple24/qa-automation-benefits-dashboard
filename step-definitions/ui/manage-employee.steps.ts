@@ -1,9 +1,11 @@
 import { When, Then } from '@cucumber/cucumber';
+import { expect } from '@playwright/test';
 import { CustomWorld } from '../../src/support/world';
 import { DashboardPage } from '../../src/ui/pages/dashboard.page';
 import { EditEmployeePage } from '../../src/ui/pages/edit-employee.page';
 import { DeleteEmployeePage } from '../../src/ui/pages/delete-employee.page';
 import { EmployeeFactory } from '../../src/factories/employee.factory';
+import { editEmployeeLocators, addEmployeeLocators } from '../../src/ui/locators/app.locators';
 
 When('I click the edit button for the created employee', async function (this: CustomWorld) {
   const dashboardPage = new DashboardPage(this.page);
@@ -52,4 +54,17 @@ Then('the employee should no longer appear in the dashboard table', async functi
     this.createdEmployee.firstName,
     this.createdEmployee.lastName,
   );
+});
+
+When('I clear all edit fields and click Update', async function (this: CustomWorld) {
+  const editPage = new EditEmployeePage(this.page);
+  await editPage.waitForModalOpen();
+  await this.page.locator(editEmployeeLocators.modalFirstName).clear();
+  await this.page.locator(editEmployeeLocators.modalLastName).clear();
+  await this.page.locator(editEmployeeLocators.modalDependants).clear();
+  await this.page.locator(editEmployeeLocators.updateButton).click();
+});
+
+Then('the edit modal title should be {string}', async function (this: CustomWorld, expectedTitle: string) {
+  await expect(this.page.locator(addEmployeeLocators.modalTitle)).toHaveText(expectedTitle);
 });
