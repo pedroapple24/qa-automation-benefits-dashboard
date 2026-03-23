@@ -1,4 +1,5 @@
 import { Given, When, Then } from '@cucumber/cucumber';
+import { expect } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import { CustomWorld } from '../../src/support/world';
 import { LoginPage } from '../../src/ui/pages/login.page';
@@ -46,4 +47,22 @@ Then('the Add Employee button should be visible', async function (this: CustomWo
 Then('I should see validation errors for missing credentials', async function (this: CustomWorld) {
   const loginPage = new LoginPage(this.page);
   await loginPage.assertEmptyCredentialsErrors();
+});
+
+Then('the url should contain {string}', async function (this: CustomWorld, expectedUrl: string) {
+  await expect(this.page).toHaveURL(new RegExp(expectedUrl));
+});
+
+When('I log out of the application', async function (this: CustomWorld) {
+  await this.page.locator('xpath=//a[@href="/Prod/Account/LogOut"]').click();
+  await this.page.waitForURL(/LogIn/);
+});
+
+When('I go back in the browser', async function (this: CustomWorld) {
+  await this.page.goBack();
+  await this.page.waitForLoadState('networkidle');
+});
+
+Then('I should be redirected to the login page', async function (this: CustomWorld) {
+  await expect(this.page).toHaveURL(/Login/);
 });

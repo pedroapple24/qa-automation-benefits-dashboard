@@ -42,5 +42,30 @@ Feature: Add Employee Modal
     And I confirm the delete
     Then the employee should no longer appear in the dashboard table
 
+  Scenario: [BUG-UI-ADD-001] Submitting empty Add Employee form should show validation errors
+    When I click the Add Employee button
+    And I click Add without filling any fields
+    Then validation errors should be shown for all required fields
+
+  Scenario: [BUG-UI-ADD-002] Single quote should not be accepted as a valid employee name
+    When I click the Add Employee button
+    And I fill in the Add Employee form with a single quote for firstName and lastName
+    Then a name validation error should be shown
+
+  Scenario: [BUG-UI-EDIT-001] Clearing all Edit Employee fields should show validation errors on Update
+    When I click the Add Employee button
+    And I fill in the Add Employee form with factory-generated data
+    And the new employee should appear in the dashboard table
+    When I click the edit button for the created employee
+    And I clear all edit fields and click Update
+    Then validation errors should be shown for all required fields
+
+  Scenario: [BUG-UI-EDIT-002] Edit Employee modal should display "Edit Employee" as the title
+    When I click the Add Employee button
+    And I fill in the Add Employee form with factory-generated data
+    And the new employee should appear in the dashboard table
+    When I click the edit button for the created employee
+    Then the edit modal title should be "Edit Employee"
+
 
 

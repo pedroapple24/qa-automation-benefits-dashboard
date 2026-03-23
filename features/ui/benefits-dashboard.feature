@@ -22,3 +22,23 @@ Feature: Paylocity Benefits Dashboard UI
   Scenario: Login fails when no credentials are provided
     When I click the Log In button
     Then I should see validation errors for missing credentials
+
+  Scenario: Successfully log out and validate login page is shown
+    When I enter valid credentials
+    And I click the Log In button
+    And I log out of the application
+    Then the url should contain "Account/LogIn"
+
+  Scenario: [BUG-UI-001] Dashboard should not be accessible without authentication
+    When I enter valid credentials
+    And I click the Log In button
+    And I log out of the application
+    And I go back in the browser
+    Then the url should contain "Account/LogIn"
+
+  Scenario: [BUG-UI-Dash-002] Unrealistic dependants count should trigger a validation warning
+    When I enter valid credentials
+    And I click the Log In button
+    And I click the Add Employee button
+    And I fill in the Add Employee form with 28 dependants
+    Then a validation warning should be shown for the dependants field
