@@ -4,6 +4,7 @@
     "require": [
       "src/support/world.ts",
       "src/support/hooks.ts",
+      "src/support/hooks.ui.ts",
       "step-definitions/**/*.ts"
     ],
     "format": [
@@ -24,5 +25,18 @@
       "html:reports/cucumber-report.html"
     ],
     "paths": ["features/api/**/*.feature"]
+  },
+  "ui": {
+    "requireModule": ["ts-node/register"],
+    "require": [
+      "src/support/world.ts",
+      "src/support/hooks.ui.ts",
+      "step-definitions/**/*.ts"
+    ],
+    "format": [
+      "summary",
+      "html:reports/cucumber-report.html"
+    ],
+    "paths": ["features/ui/**/*.feature"]
   }
 }

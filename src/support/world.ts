@@ -1,18 +1,23 @@
 import { World, IWorldOptions, setWorldConstructor } from '@cucumber/cucumber';
-import { APIRequestContext, APIResponse } from '@playwright/test';
+import { APIRequestContext, APIResponse, Browser, Page } from '@playwright/test';
 import { EmployeeService } from '../api/services/employee.service';
 import { EmployeeRequest } from '../models/employee.model';
 
 export class CustomWorld extends World {
-  // API context — replaced with `page: Page` for UI tests
+  // API context
   apiContext!: APIRequestContext;
   employeeService!: EmployeeService;
+
+  // UI context
+  browser!: Browser;
+  page!: Page;
 
   // Shared state between steps
   response!: APIResponse;
   responseBody!: Record<string, unknown>;
   employeeData!: EmployeeRequest;
   createdEmployeeId?: string;
+  createdEmployee!: EmployeeRequest;
   updatedSalary?: number;
   updatedDependants?: number;
 

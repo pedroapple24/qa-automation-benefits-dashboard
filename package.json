@@ -5,6 +5,7 @@
   "scripts": {
     "test": "cucumber-js",
     "test:api": "cucumber-js --profile api",
+    "test:ui": "cucumber-js --profile ui",
     "test:tags": "cucumber-js --tags"
   },
   "devDependencies": {
