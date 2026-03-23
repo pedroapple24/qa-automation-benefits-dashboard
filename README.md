@@ -140,6 +140,61 @@ npm run test:tags -- @ui
 
 ---
 
+## Test Cases
+
+### API — Happy Path (8 scenarios — all passing)
+
+| Feature | Scenario |
+|---|---|
+| Get All Employees | Successfully retrieve all employees |
+| Get Employee by ID | Successfully retrieve an employee by ID |
+| Create Employee | Successfully create a new employee |
+| Create Employee | Net Pay calculated correctly — 0 dependants |
+| Create Employee | Net Pay calculated correctly — 1 dependant |
+| Create Employee | Net Pay calculated correctly — 2 dependants |
+| Update Employee | Successfully update an existing employee salary and dependants |
+| Delete Employee | Successfully delete an employee |
+
+---
+
+### API — Bug Scenarios (13 scenarios — expected to FAIL until bugs are fixed)
+
+| Bug | Scenario | Expected | Actual |
+|---|---|---|---|
+| BUG-GET-002 | Response should not expose `username` in employee records | `username` absent | `username` present |
+| BUG-GET-003 | Response should not expose `expiration` in employee records | `expiration` absent | `expiration` present |
+| BUG-GET-004 | Monetary fields should have at most 2 decimal places | 2 decimal places | 6+ decimal places |
+| BUG-GET-006 | GET with non-existent employee ID should return 404 | 404 | 200 empty body |
+| BUG-POST-001 | POST should not silently override client-provided `id` | submitted id returned | new UUID generated |
+| BUG-POST-003 | POST should not silently override client-provided `salary` | submitted salary stored | hardcoded to 52000 |
+| BUG-POST-004 | POST should reject a past expiration date | 400 | 200 date stored |
+| BUG-POST-005 | POST should reject a single character `lastName` | 400 | 200 accepted |
+| BUG-POST-006 | Second POST with identical data should return 409 | 409 | 200 duplicate created |
+| BUG-PUT-001 | PUT should not accept custom salary to alter gross calculation | gross = 2000.00 | gross recalculated |
+| BUG-PUT-002 | PUT should reject placeholder username "string" | 400 | 200 accepted |
+| BUG-PUT-003 | PUT with non-existent id should return 404 not create a new record | 404 | 200 new record created |
+| BUG-DELETE-001 | DELETE with non-existent employee ID should return 404 | 404 | 200 empty body |
+
+---
+
+### UI — Happy Path (8 scenarios — all passing)
+
+| Feature | Scenario |
+|---|---|
+| Benefits Dashboard | Successful login to the Benefits Dashboard |
+| Benefits Dashboard | Dashboard table displays all required columns |
+| Benefits Dashboard | Add Employee button is visible |
+| Benefits Dashboard | Login fails when no credentials are provided |
+| Add Employee Modal | Add Employee modal displays all required elements |
+| Add Employee Modal | Successfully create an employee |
+| Add Employee Modal | Net Pay calculated correctly — 0 dependants |
+| Add Employee Modal | Net Pay calculated correctly — 1 dependant |
+| Add Employee Modal | Net Pay calculated correctly — 2 dependants |
+| Manage Employee | Edit an existing employee and validate updated info |
+| Manage Employee | Delete an existing employee and validate it is removed |
+
+---
+
 ## Viewing Reports
 
 Each run generates a timestamped report so previous runs are never overwritten:

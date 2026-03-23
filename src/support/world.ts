@@ -14,9 +14,11 @@ export class CustomWorld extends World {
 
   // Shared state between steps
   response!: APIResponse;
+  secondResponse?: APIResponse;
   responseBody!: Record<string, unknown>;
   employeeData!: EmployeeRequest;
   createdEmployeeId?: string;
+  submittedId?: string;
   createdEmployee!: EmployeeRequest;
   updatedSalary?: number;
   updatedDependants?: number;
