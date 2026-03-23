@@ -10,6 +10,10 @@ Given('I have valid employee data', function (this: CustomWorld) {
   this.employeeData = EmployeeFactory.build();
 });
 
+Given('I have valid employee data with {int} dependants', function (this: CustomWorld, dependants: number) {
+  this.employeeData = EmployeeFactory.build({ dependants, salary: 52000 });
+});
+
 Given('an employee exists in the system', async function (this: CustomWorld) {
   this.employeeData = EmployeeFactory.build();
   this.response = await this.employeeService.createEmployee(this.employeeData);
@@ -102,6 +106,20 @@ Then(
     expect(this.responseBody['net'] as number).toBeGreaterThan(0);
   }
 );
+
+// ─── Then: Business rules assertions ─────────────────────────────────────────
+
+Then('the response gross pay should be {string}', function (this: CustomWorld, expected: string) {
+  expect(Number(this.responseBody['gross'])).toBeCloseTo(Number(expected), 2);
+});
+
+Then('the response benefits cost should be {string}', function (this: CustomWorld, expected: string) {
+  expect(Number(this.responseBody['benefitsCost'])).toBeCloseTo(Number(expected), 2);
+});
+
+Then('the response net pay should be {string}', function (this: CustomWorld, expected: string) {
+  expect(Number(this.responseBody['net'])).toBeCloseTo(Number(expected), 2);
+});
 
 // ─── Then: GET All assertions ─────────────────────────────────────────────────
 

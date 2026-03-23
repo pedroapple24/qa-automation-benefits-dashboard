@@ -112,3 +112,65 @@ Ramos Lopez 10 dependents — title incorrectly
 shows Add Employee](screenshots/BUG-UI-EDIT-001.png)
 ![Edit modal with all fields cleared — no validation 
 errors shown](screenshots/BUG-UI-EDIT-001.1.png)
+
+## BUG-UI-EDIT-002: Edit Employee modal title incorrectly displays "Add Employee" instead of "Edit Employee"
+**Severity:** Medium  
+**Type:** UI — Wrong Label / UX Confusion  
+**Environment:** Prod | Chrome | 2026-03-22  
+### Description
+When clicking the Edit action button on any employee 
+record in the Benefits Dashboard, the modal that opens 
+displays the title "Add Employee" instead of "Edit Employee". 
+The modal correctly pre-populates the existing employee data 
+and shows an "Update" button — confirming this is the edit 
+flow — but the title is hardcoded as "Add Employee" regardless 
+of context. This creates confusion for the user who cannot 
+clearly tell whether they are editing an existing record or 
+creating a new one.
+### Steps to Reproduce
+1. Log into the Benefits Dashboard
+2. Navigate to:
+   https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/Benefits
+3. Locate any employee record in the table — 
+   e.g. Enola Adams, 1 dependent
+4. Click the Edit action button on the right
+5. Observe the modal title at the top
+### Expected Result
+The modal title should reflect the current action:
+- When adding a new employee → **"Add Employee"**
+- When editing an existing employee → **"Edit Employee"**
+The modal content confirms this is an edit flow:
+- Fields are pre-populated with existing data 
+- Button reads "Update" not "Add" 
+- Only the title is wrong 
+### Actual Result
+Modal title displays:
+```
+"Add Employee"  ← wrong, should be "Edit Employee"
+```
+Despite the title, the modal correctly shows:
+- First Name pre-filled: "Enola"
+- Last Name pre-filled: "Adams"
+- Dependents pre-filled: 1
+- Action button: "Update"
+### Impact
+- **User confusion:** The user cannot clearly determine 
+  whether they are editing an existing employee or 
+  creating a new one from the modal title alone
+### Recommendation
+1. Make the modal title dynamic based on context:
+```javascript
+const modalTitle = isEditMode 
+  ? 'Edit Employee' 
+  : 'Add Employee'
+```
+2. Apply the same dynamic logic to the action button 
+   for consistency — though "Update" vs "Add" is 
+   already correct
+3. Add a test case verifying the modal title matches 
+   the current action mode
+### Evidence
+![Edit modal opened by clicking Edit action on Enola 
+Adams — modal title incorrectly shows "Add Employee" 
+while fields are pre-populated and button reads 
+"Update"](screenshots/BUG-UI-EDIT-002.png)
