@@ -6,7 +6,7 @@ import { EmployeeFactory } from '../../src/factories/employee.factory';
 
 When('I click the Add Employee button', async function (this: CustomWorld) {
   const dashboardPage = new DashboardPage(this.page);
-  await this.page.waitForTimeout(4000);
+  await this.page.waitForLoadState('networkidle');
   await dashboardPage.clickAddEmployee();
 });
 
